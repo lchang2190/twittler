@@ -3,23 +3,96 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="stylesheet.css"/>
   </head>
   <body>
+    <div class="logo">
+      <img src="twittler.jpg" alt="logo">
+    </div>
+    <div id="left">  
+      <h2 id ="list">User List</h2>
+      <ul id ="users"></ul>
+    </div>
+    <div id="refreshbar">
+      <button class="home">Home</button>
+      <button class="refreshTweets">Click for New Tweets!</button>
+    </div>
+    <div id="right">
+    <h2 id ="tweets">Tweets</h2>
+    </div>
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
+        var $body = $('#tweets');
         $body.html('');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
+        //create user list
+        for (var i = 0; i < users.length; i++){
+          var $userName = $('<button class="user"></button>');
+          $userName.text(users[i]);
+          $('#users').prepend($userName); 
         }
 
+
+        //original tweets
+        var index = 0
+        while(index < streams.home.length){
+          var tweet = streams.home[index];
+          var $tweet = $('<div></div>');
+          $tweet.html('<span id ="usercolor">' + '-' + '@' + tweet.user + '</span> ' + '<span id="datecolor">' + tweet.created_at + '</span><br>' + '<span id="text">' + tweet.message + '</span');
+          $tweet.prependTo($body);
+          index += 1;
+          streams.lastread = index +1;
+        }
+
+        //update tweets
+        $(".refreshTweets").on('click', function(){
+
+          var index = streams.lastRead;
+          streams.lastRead = streams.home.length;
+          while(index < streams.home.length){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+
+            if(tweet !== undefined){
+              $tweet.html('<span id ="usercolor">' + '-' + '@' + tweet.user + '</span> ' + '<span id="datecolor">' + tweet.created_at + '</span><br>' + '<span id="text">' + tweet.message + '</span');
+              $tweet.prependTo($body);
+              index += 1;
+            }
+          }
+        })
+
+        //filter user tweets
+        $(".user").on('click', function(){
+          var name = $(this).text();
+          $body.html('');
+
+          for(var i = 0; i < streams.home.length; i++){
+            var tweet = streams.home[i];
+            if(tweet.user === name){
+              var $tweet = $('<div></div>');
+              $tweet.html('<span id ="usercolor">' + '-' + '@' + tweet.user + '</span> ' + '<span id="datecolor">' + tweet.created_at + '</span><br>' + '<span id="text">' + tweet.message + '</span');
+              $body.prepend($tweet);
+            }
+          }
+        });
+
+        //click home to show all tweets
+        $(".home").on('click', function(){
+          $body.html('');
+          streams.lastRead = 0;
+          var index = streams.lastRead;
+          streams.lastRead = streams.home.length;
+          while(index < streams.home.length){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            if(tweet !== undefined){
+              $tweet.html('<span id ="usercolor">' + '-' + '@' + tweet.user + '</span> ' + '<span id="datecolor">' + tweet.created_at + '</span><br>' + '<span id="text">' + tweet.message + '</span');
+              $tweet.prependTo($body);
+              index += 1;
+            }
+          };
+        })
       });
 
     </script>

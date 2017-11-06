@@ -1,0 +1,76 @@
+#misc{
+	color: white;
+	text-align: center;
+}
+
+#left{
+	float: left;
+	margin: 0 1.5%;
+	width: 15%;
+}
+
+#right{
+	float: right;
+	margin: 0 2%;
+	width: 70%;
+}
+
+#list{
+	color: white;
+	top: 35%;
+}
+
+#tweets{	
+	font-size: medium;
+	overflow: auto;
+  	width: 800px;
+  	height: 350px;
+}
+
+.user{
+	background-color: transparent;
+	outline: none;
+	border: none;
+	display: block;
+	font-size: medium;
+	cursor: pointer;
+}
+
+body{
+	background-color: #31CDFF;
+	font-family: sans-serif;
+}
+
+.logo{
+	text-align: center;
+}
+
+#refreshbar{
+	float: right;
+	margin: 0 2%;
+	width: 70%;
+ }
+
+.home{
+	border-radius: 16px;
+	font-size: medium;
+	cursor: pointer;
+}
+.refreshTweets{
+	border-radius: 16px;
+	font-size: medium;
+	cursor: pointer;
+}
+
+#usercolor{
+	color: blue;
+}
+
+#datecolor{
+	color: grey;
+	font-size: small;
+}
+
+#text{
+	padding-left: 50pt;
+}
